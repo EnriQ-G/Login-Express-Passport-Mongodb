@@ -13,6 +13,7 @@ app.set('port', process.env.PORT || 3000); //aquí le decimos que utilice el pue
 
 //middlewares
 app.use(morgan('dev')); //aquí le decimos que utilice morgan para ver las peticiones que se hacen al servidor
+app.use(express.urlencoded({ extended: false })); //para que el servidor entienda los datos que le enviamos desde el formulario (en este caso el login
 
 //rutas
 app.use(require('./routes/login.routes')); //aquí le decimos que utilice el archivo login.routes.js
