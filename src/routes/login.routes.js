@@ -1,13 +1,15 @@
 const express = require('express');
 const router = express.Router();
 
-router('/', (req, res, next) => {
+router.get('/', (req, res, next) => {
+    res.render('views');
 
 });
 
 router.get('/signup', (req, res, next) => {
 
 });
+
 
 router.post('/signup', (req, res, next) => {
 
