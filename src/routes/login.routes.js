@@ -16,7 +16,7 @@ router.get('/signup', (req, res, next) => {
 router.post('/signup', (req, res, next) => {
     const { name, email, password, confirm_password } = req.body;
     const errors = [];
-    if (name.length <= 0) {
+    if (name.length <= 5) {
         errors.push({ text: 'Please write a name' });
     }
     if (email.length <= 0) {
@@ -25,6 +25,10 @@ router.post('/signup', (req, res, next) => {
     if (password != confirm_password) {
         errors.push({ text: 'Passwords do not match' });
     }
+
+    res.send(errors);
+    console.log(req.body)
+    res.send('received')
 });
 
 router.get('/signin', (req, res, next) => {
