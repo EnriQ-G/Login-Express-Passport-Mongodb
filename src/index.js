@@ -3,7 +3,9 @@ const engine = require('ejs-mate'); //plantillas para creación de htmls
 const path = require('path'); //para manejar rutas de archivos, nos permite conectar diversos directorios
 const morgan = require('morgan'); //para ver las peticiones que se hacen al servidor
 
+//inicializaciones
 const app = express();
+require('../src/database/database'); //aquí le decimos que utilice el archivo database.js (en este caso para conectarse a la base de datos 'mongodb
 
 //configuraciones
 app.set('views', path.join(__dirname, 'views')); //lo que devuelve esta constante es donde está este archivo, en este caso en la carpeta src
