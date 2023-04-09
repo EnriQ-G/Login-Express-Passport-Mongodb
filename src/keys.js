@@ -4,4 +4,6 @@ module.exports = {
     }
 };
 
+PORT = 3000
+SESSION_SECRET = mysecretkey
 
