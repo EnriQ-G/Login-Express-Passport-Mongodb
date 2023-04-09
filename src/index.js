@@ -1,3 +1,4 @@
+require('dotenv').config({ path: '.keys' }); //para utilizar las variables de entorno
 const express = require('express');
 const engine = require('ejs-mate'); //plantillas para creación de htmls
 const path = require('path'); //para manejar rutas de archivos, nos permite conectar diversos directorios
@@ -21,11 +22,10 @@ app.set('port', process.env.PORT || 3000); //aquí le decimos que utilice el pue
 app.use(morgan('dev')); //aquí le decimos que utilice morgan para ver las peticiones que se hacen al servidor
 app.use(express.urlencoded({ extended: false })); //para que el servidor entienda los datos que le enviamos desde el formulario (en este caso el login)
 app.use(session({
-    secret: 'mysecretapp',
+    secret: process.env.SESSION_SECRET,
     resave: true,
     saveUninitialized: false
-
-}));    //aquí le decimos que utilice session para guardar datos de sesión
+}));   //aquí le decimos que utilice session para guardar datos de sesión
 app.use(passport.initialize()); //aquí le decimos que utilice passport para autenticar usuarios
 app.use(passport.session()); //aquí le decimos que utilice passport para autenticar usuarios
 

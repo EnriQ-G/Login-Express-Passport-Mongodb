@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-
+const passport = require('passport');
 
 router.get('/', (req, res, next) => {
     res.render('views');
@@ -12,6 +12,11 @@ router.get('/signup', (req, res, next) => {
 
 });
 
+router.post('/signup', passport.authenticate('local-signup', {
+    successRedirect: '/',
+    failureRedirect: '/signup',
+    passReqToCallback: true
+}));
 
 router.post('/signup', (req, res, next) => {
     const { name, email, password, confirm_password } = req.body;
@@ -37,6 +42,10 @@ router.get('/signin', (req, res, next) => {
 
 router.post('/signin', (req, res, next) => {
 
+});
+
+router.get('/profile', (req, res, next) => {
+    res.render('profile');
 });
 
 module.exports = router;
