@@ -12,17 +12,17 @@ passport.deserializeUser(async (id, done) => {
     done(null, user);
 }); //done es un callback que se ejecuta cuando la autenticación ha sido exitosa
 
-passport.use('local-signup', new LocalStrategy({ //local-signup es el nombre que le damos a la estrategia
+passport.use('local-signup', new LocalStrategy({
     usernameField: 'email',
     passwordField: 'password',
-    confirmpasswordField: 'confirm_password',
     passReqToCallback: true
 }, async (req, email, password, done) => {
+    console.log('local-signup strategy called');
     const user = new User();
     user.email = email;
-    user.password = password;
-    user.confirm_password = confirm_password;
+    user.password = user.encryptPassword(password);
     await user.save();
+    console.log('User saved successfully:', user);
     done(null, user);
-})); //done es un callback que se ejecuta cuando la autenticación ha sido exitosa
+}));//done es un callback que se ejecuta cuando la autenticación ha sido exitosa
 

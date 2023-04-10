@@ -5,6 +5,8 @@ const path = require('path'); //para manejar rutas de archivos, nos permite cone
 const morgan = require('morgan'); //para ver las peticiones que se hacen al servidor
 const passport = require('passport'); //para autenticar usuarios
 const session = require('express-session'); //para guardar datos de sesión
+const bodyParser = require('body-parser');
+
 
 //inicializaciones
 const app = express();
@@ -20,16 +22,20 @@ app.set('port', process.env.PORT || 3000); //aquí le decimos que utilice el pue
 
 //middlewares
 app.use(morgan('dev')); //aquí le decimos que utilice morgan para ver las peticiones que se hacen al servidor
-app.use(express.urlencoded({ extended: false })); //para que el servidor entienda los datos que le enviamos desde el formulario (en este caso el login)
+app.use(bodyParser.urlencoded({ extended: false })); //aquí le decimos que utilice bodyParser para interpretar los datos que llegan desde el cliente
 app.use(session({
-    secret: process.env.SESSION_SECRET,
+    secret: 'mysecretkey',
     resave: true,
-    saveUninitialized: false
-}));   //aquí le decimos que utilice session para guardar datos de sesión
+    saveUninitialized: false,
+    cookie: {
+        secure: true,
+        maxAge: 60000
+    }
+}));  //aquí le decimos que utilice session para guardar datos de sesión
 app.use(passport.initialize()); //aquí le decimos que utilice passport para autenticar usuarios
 app.use(passport.session()); //aquí le decimos que utilice passport para autenticar usuarios
 
-//rutas
+//ruta para el login
 app.use(require('./routes/login.routes')); //aquí le decimos que utilice el archivo login.routes.js
 
 //empezando el servidor
