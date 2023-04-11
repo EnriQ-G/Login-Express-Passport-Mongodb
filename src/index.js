@@ -6,7 +6,7 @@ const morgan = require('morgan'); //para ver las peticiones que se hacen al serv
 const passport = require('passport'); //para autenticar usuarios
 const session = require('express-session'); //para guardar datos de sesión
 const bodyParser = require('body-parser');
-
+const flash = require('connect-flash'); //para enviar mensajes entre vistas
 
 //inicializaciones
 const app = express();
@@ -32,8 +32,10 @@ app.use(session({
         maxAge: 60000
     }
 }));  //aquí le decimos que utilice session para guardar datos de sesión
+app.use(flash()); //aquí le decimos que utilice flash para enviar mensajes entre vistas
 app.use(passport.initialize()); //aquí le decimos que utilice passport para autenticar usuarios
 app.use(passport.session()); //aquí le decimos que utilice passport para autenticar usuarios
+
 
 //ruta para el login
 app.use(require('./routes/login.routes')); //aquí le decimos que utilice el archivo login.routes.js
