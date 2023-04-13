@@ -27,14 +27,18 @@ app.use(session({
     secret: 'mysecretkey',
     resave: true,
     saveUninitialized: false,
-    cookie: {
-        secure: true,
-        maxAge: 60000
-    }
 }));  //aquí le decimos que utilice session para guardar datos de sesión
 app.use(flash()); //aquí le decimos que utilice flash para enviar mensajes entre vistas
 app.use(passport.initialize()); //aquí le decimos que utilice passport para autenticar usuarios
 app.use(passport.session()); //aquí le decimos que utilice passport para autenticar usuarios
+
+app.use((req, res, next) => {
+    app.locals.signupMessage = req.flash('signupMessage');
+    next();
+    console.log("signupMessage in app.locals:", app.locals.signupMessage); // add console log to check signupMessage value
+    console.log("req.flash('signupMessage'):", req.flash('signupMessage')); // add console log to check req.flash('signupMessage') value
+});
+
 
 
 //ruta para el login

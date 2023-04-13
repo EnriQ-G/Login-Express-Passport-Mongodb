@@ -17,20 +17,17 @@ passport.use('local-signup', new LocalStrategy({
     passwordField: 'password',
     passReqToCallback: true
 }, async (req, email, password, done) => {
-    const usedUser = User.findOne({ email: email }); //busca un usuario con el email que se le pasa para verrificar si ya existe
-    if (usedUser) {
-        return done(null, false, req.flash('signupMessage', 'El email ya está en uso'));
+    const user = await User.findOne({ email: email });
+    if (user !== null) {
+        return done(null, false, req.flash('signupMessage', 'El correo ya está en uso'));
+    } else {
+        const newUser = new User();
+        newUser.email = email;
+        newUser.password = newUser.encryptPassword(password);
+        await newUser.save();
+        console.log('User saved successfully:', newUser);
+        done(null, newUser);
     }
-    else {
-        console.log('local-signup strategy called');
-        const user = new User();
-        user.email = email;
-        user.password = user.encryptPassword(password);
-        await user.save();
-        console.log('User saved successfully:', user);
-        done(null, user);
-    }
-
 
 }));//done es un callback que se ejecuta cuando la autenticación ha sido exitosa
 
