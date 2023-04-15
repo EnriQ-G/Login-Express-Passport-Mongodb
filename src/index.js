@@ -34,9 +34,8 @@ app.use(passport.session()); //aquí le decimos que utilice passport para autent
 
 app.use((req, res, next) => {
     app.locals.signupMessage = req.flash('signupMessage');
+    app.locals.signinMessage = req.flash('signinMessage');
     next();
-    console.log("signupMessage in app.locals:", app.locals.signupMessage); // add console log to check signupMessage value
-    console.log("req.flash('signupMessage'):", req.flash('signupMessage')); // add console log to check req.flash('signupMessage') value
 });
 
 
