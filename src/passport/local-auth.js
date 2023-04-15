@@ -29,7 +29,7 @@ passport.use('local-signup', new LocalStrategy({
         done(null, newUser);
     }
 
-}));//done es un callback que se ejecuta cuando la autenticación ha sido exitosa
+})); //done es un callback que se ejecuta cuando la autenticación ha sido exitosa
 
 passport.use('local-signin', new LocalStrategy({
     usernameField: 'email',
@@ -44,4 +44,4 @@ passport.use('local-signin', new LocalStrategy({
         return done(null, false, req.flash('signinMessage', 'Contraseña incorrecta'));
     }
     done(null, user);
-}));//done es un callback que se ejecuta cuando la autenticación ha sido exitosa
+})); //done es un callback que se ejecuta cuando la autenticación ha sido exitosa
